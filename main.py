@@ -13,7 +13,14 @@ from google import genai
 from google.genai import types
 
 
+_SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png"}
+
+
 def preprocess_image(image_path: str, size: tuple = (512, 512)) -> dict:
+    ext = os.path.splitext(image_path)[1].lower()
+    if ext not in _SUPPORTED_EXTENSIONS:
+        raise ValueError(f"Unsupported format '{ext}'. Supported: JPG, JPEG, PNG.")
+
     img_bgr = cv2.imread(image_path)
     if img_bgr is None:
         raise FileNotFoundError(f"Image not found: {image_path}")
@@ -127,7 +134,7 @@ def main():
 
     try:
         metrics = calculate_cv_similarity(args.img1, args.img2)
-    except FileNotFoundError as e:
+    except (FileNotFoundError, ValueError) as e:
         print(json.dumps({"error": str(e)}), file=sys.stderr)
         sys.exit(1)
 

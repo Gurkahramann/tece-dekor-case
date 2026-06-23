@@ -31,7 +31,11 @@ API anahtarını [Google AI Studio](https://aistudio.google.com/app/apikey) üze
 ## Çalıştırma
 
 ```bash
+# JPG
 python main.py --img1 test_images/pair3_master.jpg --img2 test_images/saha_testi.jpg
+
+# PNG
+python main.py --img1 test_images/master.png --img2 test_images/sample.png
 ```
 
 ## Örnek Çıktı
